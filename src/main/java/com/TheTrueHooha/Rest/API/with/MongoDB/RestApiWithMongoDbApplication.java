@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,6 +33,7 @@ public class RestApiWithMongoDbApplication {
 					"554500"
 			);
 
+			String email = "pg123@gmail.com";
 			Student student = new Student(
 					"Prince",
 					"Goodluck",
@@ -41,6 +44,11 @@ public class RestApiWithMongoDbApplication {
 					BigDecimal.TEN,
 					LocalDateTime.now()
 			);
+
+			//how to create new custom queries
+			Query query = new Query();
+			query.addCriteria(Criteria.where("email").is(email));
+
 
 			repository.insert(student);
 		};
