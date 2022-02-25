@@ -10,7 +10,7 @@ services:
       - data:/data
     environment:
       - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
   mongo-express:
     image: mongo-express
     container_name: mongo-express

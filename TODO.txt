@@ -1,0 +1,3 @@
+create docker connection
+initialise mongo express connection
+create database on mongo express mongo
