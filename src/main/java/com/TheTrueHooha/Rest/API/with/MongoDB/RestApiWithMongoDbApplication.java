@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -25,7 +26,8 @@ public class RestApiWithMongoDbApplication {
 
 
 	@Bean
-	CommandLineRunner runner (StudentRepository repository) {
+	CommandLineRunner runner (
+			StudentRepository repository, MongoTemplate mongoTemplate) {
 		return args -> {
 			Address address = new Address(
 					"Warri",
@@ -49,8 +51,20 @@ public class RestApiWithMongoDbApplication {
 			Query query = new Query();
 			query.addCriteria(Criteria.where("email").is(email));
 
+			List <Student> students = mongoTemplate.find(query, Student.class);
 
-			repository.insert(student);
+			if (students.size() > 1) {
+				throw new IllegalStateException("email used by another user" + email);
+			}
+
+			if (students.isEmpty()) {
+
+				System.out.println("inserting user" + student);
+				repository.insert(student);
+			} else {
+				System.out.println(student + "already exist");
+			}
+
 		};
 	}
 }
