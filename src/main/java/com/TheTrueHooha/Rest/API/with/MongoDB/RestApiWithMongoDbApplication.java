@@ -47,24 +47,37 @@ public class RestApiWithMongoDbApplication {
 					LocalDateTime.now()
 			);
 
-			//how to create new custom queries
-			Query query = new Query();
-			query.addCriteria(Criteria.where("email").is(email));
 
-			List <Student> students = mongoTemplate.find(query, Student.class);
+			//usingMongoTemplateAndQuery(repository, mongoTemplate, email, student);
+			repository.findStudentByEmail(email)
+					.ifPresentOrElse(s -> {
+						System.out.println(s + "already exists");
 
-			if (students.size() > 1) {
-				throw new IllegalStateException("email used by another user" + email);
-			}
-
-			if (students.isEmpty()) {
-
-				System.out.println("inserting user" + student);
-				repository.insert(student);
-			} else {
-				System.out.println(student + "already exist");
-			}
+					}, () -> {
+						System.out.println("inserting student, calm down abeg" + student);
+						repository.insert(student);
+					});
 
 		};
+	}
+
+	private void usingMongoTemplateAndQuery(StudentRepository repository, MongoTemplate mongoTemplate, String email, Student student) {
+		//how to create new custom queries
+		Query query = new Query();
+		query.addCriteria(Criteria.where("email").is(email));
+
+		List <Student> students = mongoTemplate.find(query, Student.class);
+
+		if (students.size() > 1) {
+			throw new IllegalStateException("email used by another user" + email);
+		}
+
+		if (students.isEmpty()) {
+
+			System.out.println("inserting user" + student);
+			repository.insert(student);
+		} else {
+			System.out.println(student + "already exist");
+		}
 	}
 }
