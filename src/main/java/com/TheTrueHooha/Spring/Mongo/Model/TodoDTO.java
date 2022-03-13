@@ -20,7 +20,7 @@ import java.util.Date;
 public class TodoDTO {
 
     @Id
-    private Long id;
+    private String id;
 
     @Field("tasks")
     private String tasks;
