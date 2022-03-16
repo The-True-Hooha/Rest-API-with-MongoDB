@@ -16,10 +16,9 @@ public class TodoServiceImpl implements TodoService{
 
     private TodoRepository todoRepo;
     @Override
-    public void createTasks(TodoDTO todo) throws ConstraintViolationException, TodoException {
+    public void createTasks(TodoDTO todo) throws ConstraintViolationException {
         Optional<TodoDTO> todoOptional = todoRepo.findByTasks(todo.getTasks());
         if (todoOptional.isPresent()) {
-            throw new TodoException(TodoException.TodoAlreadyExist());
         } else {
             todo.setCreatedAt(new Date(System.currentTimeMillis()));
             todoRepo.save(todo);
@@ -72,7 +71,7 @@ public class TodoServiceImpl implements TodoService{
     public void deleteTaskById(String id) throws TodoException {
         Optional<TodoDTO> todoDelete = todoRepo.findById(id);
         if (!todoDelete.isPresent()) {
-            throw new TodoException(TodoException.NotFoundException());
+            throw new TodoException(TodoException.NotFoundException(id));
         } else {
             todoRepo.deleteById(id);
         }
