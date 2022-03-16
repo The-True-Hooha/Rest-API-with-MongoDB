@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.ConstraintViolationException;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TodoController {
@@ -56,7 +54,7 @@ public class TodoController {
     public ResponseEntity<?> updateTask(@PathVariable("id") String id, @RequestBody TodoDTO todo) {
         try {
             todoService.updateTask(id, todo);
-            return new ResponseEntity<>("update todo with id " + id, HttpStatus.OK)
+            return new ResponseEntity<>("update todo with id " + id, HttpStatus.OK);
         } catch (ConstraintViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (TodoException e) {
