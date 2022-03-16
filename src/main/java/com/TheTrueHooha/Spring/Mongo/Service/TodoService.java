@@ -21,3 +21,4 @@ public interface TodoService {
 }
 
 //todo: connect to mongodb atlas online
+// TODO: 15/03/2022 update pom.xml dependency
