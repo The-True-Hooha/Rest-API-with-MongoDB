@@ -4,3 +4,4 @@ USER spring:spring
 ARG JAR_FILE=target/*.jar
 COPY /build/libs/Spring-Mongo-1.0.0.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
+

@@ -30,8 +30,6 @@ public class TodoController {
     @PostMapping("/create-new")
     public ResponseEntity<?> createTodo(@RequestBody TodoDTO todoDTO) {
         try {
-            //todoDTO.setCreatedAt(new Date(System.currentTimeMillis()));
-            //todoRepository.save(todoDTO);
             todoService.createTasks(todoDTO);
             return new ResponseEntity<TodoDTO>(todoDTO, HttpStatus.OK);
         } catch (ConstraintViolationException exception) {
