@@ -1,7 +1,5 @@
-FROM openjdk:17.0.1-jdk-alpine
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
+FROM openjdk:17-jdk-alpine
+LABEL maintainer="TheTrueHooha"
 ARG JAR_FILE=target/*.jar
-COPY /build/libs/Spring-Mongo-1.0.0.jar app.jar
+ADD target/Spring-Mongo-0.0.1-SNAPSHOT.jar Spring-Mongo-0.0.1-SNAPSHOT.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
-
